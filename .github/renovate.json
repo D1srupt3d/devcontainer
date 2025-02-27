@@ -8,5 +8,17 @@
     "fileMatch": [".devcontainer/dockerfile"]
   },
   "labels": ["dependencies"],
-  "schedule": ["before 3am"]
+  "schedule": ["before 3am"],
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "automerge": true
+    }
+  ]
 } 

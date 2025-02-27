@@ -27,7 +27,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.check-version.outputs.update_needed == 'true'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           commit-message: 'chore(deps): update geodesic base image to latest SHA'
           title: '⬆️ Update Geodesic base image to latest version'

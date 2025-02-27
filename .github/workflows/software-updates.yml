@@ -11,6 +11,45 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Install govulncheck
+        run: go install golang.org/x/vuln/cmd/govulncheck@latest
+
+      - name: Check and Fix Vulnerabilities
+        id: vulncheck
+        run: |
+          # Create array to store vulnerability fixes
+          VULN_UPDATES=""
+          
+          # Run vulnerability check and capture output
+          VULNS=$(govulncheck ./... -json | jq -r '.vulns[]? | "\(.pkg)@\(.fixed[0])"' | sort -u)
+          
+          if [ ! -z "$VULNS" ]; then
+            while IFS= read -r vuln; do
+              if [ ! -z "$vuln" ]; then
+                PKG=$(echo $vuln | cut -d'@' -f1)
+                VERSION=$(echo $vuln | cut -d'@' -f2)
+                echo "Updating $PKG to $VERSION"
+                go get -u "$vuln"
+                VULN_UPDATES="${VULN_UPDATES}- $PKG: $VERSION (security fix)\n"
+              fi
+            done <<< "$VULNS"
+            
+            # Clean up dependencies
+            go mod tidy
+          fi
+          
+          # Store vulnerability updates
+          {
+            echo "VULN_FIXES<<EOF"
+            echo -e "$VULN_UPDATES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Check Latest Versions
         id: versions
         run: |
@@ -31,16 +70,20 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          commit-message: 'chore(deps): update internal tools to latest versions'
-          title: '⬆️ Update internal tools to latest versions'
+          commit-message: 'chore(deps): update internal tools and fix vulnerabilities'
+          title: '⬆️ Update internal tools and fix vulnerabilities'
           body: |
             Updates internal tools to their latest versions:
             
             ${{ steps.versions.outputs.UPDATES }}
             
-            This PR was automatically generated to keep the development tools up to date.
+            Security vulnerability fixes:
+            ${{ steps.vulncheck.outputs.VULN_FIXES }}
+            
+            This PR was automatically generated to keep the development tools up to date and fix security vulnerabilities.
           branch: update-internal-tools
           delete-branch: true
           labels: |
             dependencies
-            automated 
+            automated
+            security 

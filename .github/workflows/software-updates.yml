@@ -20,11 +20,13 @@ jobs:
           NODE_LTS=$(curl -s https://nodejs.org/dist/index.json | jq -r '[.[] | select(.lts != false)][0].version')
           
           # Store versions for PR
-          echo "UPDATES<<EOF" >> $GITHUB_ENV
-          echo "- Starship: $STARSHIP" >> $GITHUB_ENV
-          echo "- Lazygit: $LAZYGIT" >> $GITHUB_ENV
-          echo "- Node.js LTS: $NODE_LTS" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          {
+            echo "UPDATES<<EOF"
+            echo "- Starship: $STARSHIP"
+            echo "- Lazygit: $LAZYGIT"
+            echo "- Node.js LTS: $NODE_LTS"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
@@ -34,7 +36,7 @@ jobs:
           body: |
             Updates internal tools to their latest versions:
             
-            ${{ env.UPDATES }}
+            ${{ steps.versions.outputs.UPDATES }}
             
             This PR was automatically generated to keep the development tools up to date.
           branch: update-internal-tools

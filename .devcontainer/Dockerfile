@@ -1,16 +1,18 @@
 # Base Image
 FROM cloudposse/geodesic:latest
 
-# Disable Geodesic MOTD
+# Disable ALL Geodesic welcome messages and MOTD
+ENV GEODESIC_WELCOME=false
 ENV GEODESIC_MOTD=false
+ENV BANNER=""
 
 # Metadata
 LABEL org.opencontainers.image.source="https://github.com/d1srupt3d/devcontainer"
 LABEL org.opencontainers.image.description="Advanced Development Environment based on Geodesic"
 LABEL org.opencontainers.image.licenses="MIT"
 
-# Remove existing MOTD
-RUN rm -f /etc/motd /etc/update-motd.d/*
+# Remove existing MOTD and Geodesic scripts
+RUN rm -f /etc/motd /etc/update-motd.d/* /etc/profile.d/banner.sh
 
 # System Package Installation
 RUN apt-get update && apt-get upgrade -y \
@@ -74,9 +76,6 @@ RUN git clone https://github.com/ohmyzsh/oh-my-zsh.git ~/.oh-my-zsh \
 # 3. ZSH Configuration
 RUN echo 'plugins=(git docker kubectl terraform aws zsh-autosuggestions zsh-syntax-highlighting)' >> ~/.zshrc \
     && echo 'eval "$(starship init zsh)"' >> ~/.zshrc
-
-# Disable Geodesic MOTD
-ENV GEODESIC_MOTD=false
 
 # Custom MOTD Configuration
 RUN echo '\n\

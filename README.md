@@ -59,9 +59,11 @@ docker pull ghcr.io/d1srupt3d/devcontainer:latest
 # Run the container
 docker run -it \
     -v $(pwd):/workspace \
-    -v ~/.aws:/root/.aws \
-    -v ~/.ssh:/root/.ssh \
-    -v ~/.gitconfig:/root/.gitconfig \
+    -v ~/.aws:/home/dev/.aws \
+    -v ~/.ssh:/home/dev/.ssh \
+    -v ~/.gitconfig:/home/dev/.gitconfig \
+    -v ~/.config/starship.toml:/home/dev/.config/starship.toml \
+    -v ~/.zshrc:/home/dev/.zshrc \
     -v /var/run/docker.sock:/var/run/docker.sock \
     ghcr.io/d1srupt3d/devcontainer:latest
 ```

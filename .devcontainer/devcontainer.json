@@ -1,15 +1,17 @@
 {
-    "name": "Advanced Development Environment",
+    "name": "Development Container",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "dockerfile"
     },
-    "features": {
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-        "ghcr.io/devcontainers/features/github-cli:1": {},
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "lts"
-        }
-    },
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+        "source=${localEnv:HOME},target=/home/dev/host_home,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.config/starship.toml,target=/home/dev/.config/starship.toml,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.zshrc,target=/home/dev/.zshrc,type=bind,consistency=cached",
+        "source=/,target=/host,type=bind,consistency=cached,readonly"
+    ],
+    "remoteUser": "dev",
+    "updateRemoteUserUID": true,
     "customizations": {
         "vscode": {
             "extensions": [
@@ -44,5 +46,11 @@
                 "terminal.integrated.defaultProfile.linux": "zsh"
             }
         }
+    },
+    "runArgs": [
+        "--network=host"
+    ],
+    "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
     }
 } 

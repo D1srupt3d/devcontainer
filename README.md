@@ -2,24 +2,44 @@
 
 This repository contains a VS Code Development Container configuration based on CloudPosse's Geodesic image, enhanced with additional development tools and features.
 
-[![Build Dev Container](https://github.com/D1srupt3d/devcontainer/actions/workflows/container_build.yml/badge.svg)](https://github.com/D1srupt3d/devcontainer/actions/workflows/container_build.yml)
+[![Build Dev Container](https://github.com/d1srupt3d/devcontainer/actions/workflows/container_build.yml/badge.svg)](https://github.com/d1srupt3d/devcontainer/actions/workflows/container_build.yml)
 
 ## Features
 
-- Based on CloudPosse Geodesic
+- Based on CloudPosse Geodesic:
+  - Terraform
+  - AWS CLI
+  - kubectl
+  - helm
+  - helmfile
+  - chamber
+  - gomplate
+  - yq
+  - jq
+  - sops
+  - goofys
+  - and [many more](https://github.com/cloudposse/geodesic)
 - Pre-installed development tools:
-  - Terraform, Ansible, AWS CLI
-  - Python, Go, Rust, TypeScript/Node.js
-  - Docker and Kubernetes tools
-  - Advanced CLI tools (fzf, ripgrep, lazygit)
-- Customized ZSH shell with Starship prompt
-- VS Code extensions for:
-  - Infrastructure as Code
-  - Cloud Development
-  - Various Programming Languages
-  - Git Integration
-  - AI Assistance (GitHub Copilot)
-  - Code Quality Tools
+  - Python 3 with pip
+  - Go
+  - Rust with Cargo
+  - TypeScript/Node.js (via n version manager)
+  - GitHub CLI (gh)
+  - Lazygit
+  - Neovim
+  - Ripgrep
+  - Ansible
+- Customized ZSH shell with:
+  - Starship prompt
+  - Oh-my-zsh with plugins:
+    - git
+    - docker
+    - kubectl
+    - terraform
+    - aws
+    - zsh-autosuggestions
+    - zsh-syntax-highlighting
+- Custom MOTD (Message of the Day)
 
 ## Usage
 
@@ -111,3 +131,7 @@ Features of the `dev` command:
 - Passes through common environment variables
 - Uses host network for local development
 - Automatically removes container on exit
+
+## Updates
+
+This container is automatically built and published to GitHub Container Registry. You can find the latest version at `ghcr.io/d1srupt3d/devcontainer:latest`.

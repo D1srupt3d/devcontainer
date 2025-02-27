@@ -6,6 +6,10 @@
     ":semanticCommits",
     ":enableVulnerabilityAlertsWithLabel(security)"
   ],
+  "onboarding": true,
+  "onboardingConfig": {
+    "extends": ["config:base"]
+  },
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],

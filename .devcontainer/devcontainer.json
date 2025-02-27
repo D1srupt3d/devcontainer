@@ -1,0 +1,48 @@
+{
+    "name": "Advanced Development Environment",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "hashicorp.terraform",
+                "redhat.vscode-yaml",
+                "ms-python.python",
+                "golang.go",
+                "rust-lang.rust-analyzer",
+                "ms-kubernetes-tools.vscode-kubernetes-tools",
+                "esbenp.prettier-vscode",
+                "gitlens.gitlens",
+                "vscodevim.vim",
+                "yzhang.markdown-all-in-one",
+                "streetsidesoftware.code-spell-checker",
+                "eamodio.gitlens",
+                "ms-vscode.vscode-typescript-tray",
+                "redhat.ansible",
+                "mutantdino.resourcemonitor",
+                "github.copilot",
+                "github.copilot-chat",
+                "ms-vscode-remote.remote-containers",
+                "redhat.vscode-xml",
+                "mikestead.dotenv",
+                "christian-kohler.path-intellisense",
+                "formulahendry.code-runner",
+                "wayou.vscode-todo-highlight",
+                "shardulm94.trailing-spaces",
+                "vscode-icons-team.vscode-icons"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh"
+            }
+        }
+    }
+} 

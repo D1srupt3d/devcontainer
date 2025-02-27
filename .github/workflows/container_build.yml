@@ -5,10 +5,12 @@ on:
     branches: [ main ]
     paths:
       - '.devcontainer/**'
+      - '.github/workflows/container_build.yml'
   pull_request:
     branches: [ main ]
     paths:
       - '.devcontainer/**'
+      - '.github/workflows/container_build.yml'
 
 env:
   REGISTRY: ghcr.io
@@ -20,6 +22,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -56,7 +59,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .devcontainer
-          platforms: linux/amd64,linux/arm64  # Multi-platform support
+          file: .devcontainer/Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

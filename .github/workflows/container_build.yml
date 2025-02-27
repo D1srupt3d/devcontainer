@@ -1,11 +1,14 @@
-name: Build and Push Docker Image
+name: Build Dev Container
 
 on:
   push:
     branches: [ main ]
-    tags: [ 'v*' ]
+    paths:
+      - '.devcontainer/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - '.devcontainer/**'
 
 env:
   REGISTRY: ghcr.io

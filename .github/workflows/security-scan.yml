@@ -34,6 +34,9 @@ jobs:
           go install golang.org/x/vuln/cmd/govulncheck@latest
           
           # Install npm for Node.js dependencies
+          mkdir -p ~/.npm-global
+          npm config set prefix '~/.npm-global'
+          export PATH=~/.npm-global/bin:$PATH
           npm install -g npm@latest
           
           # Install safety for Python dependencies
@@ -68,7 +71,8 @@ jobs:
           # Process npm vulnerabilities
           if [ -f "package.json" ]; then
             echo "Checking npm vulnerabilities..."
-            npm audit fix
+            export PATH=~/.npm-global/bin:$PATH
+            npm audit fix || npm audit fix --force
             if [ $? -eq 0 ]; then
               UPDATES="${UPDATES}- Updated npm packages\n"
             fi

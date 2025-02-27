@@ -2,7 +2,7 @@
 
 This repository contains a VS Code Development Container configuration based on CloudPosse's Geodesic image, enhanced with additional development tools and features.
 
-[![Build and Push Docker Image](https://github.com/D1srupt3d/devcontainer/actions/workflows/docker_build.yml/badge.svg)](https://github.com/D1srupt3d/devcontainer/actions/workflows/docker_build.yml)
+[![Build Dev Container](https://github.com/D1srupt3d/devcontainer/actions/workflows/container_build.yml/badge.svg)](https://github.com/D1srupt3d/devcontainer/actions/workflows/container_build.yml)
 
 ## Features
 
